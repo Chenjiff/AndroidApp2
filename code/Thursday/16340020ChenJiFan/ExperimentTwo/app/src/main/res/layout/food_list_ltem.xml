@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+    <Button
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/shape_for_icon"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        android:id="@+id/food_icon"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/food_icon"
+        android:layout_alignBaseline="@id/food_icon"
+        android:textSize="21dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/food_name"/>
+</RelativeLayout>
