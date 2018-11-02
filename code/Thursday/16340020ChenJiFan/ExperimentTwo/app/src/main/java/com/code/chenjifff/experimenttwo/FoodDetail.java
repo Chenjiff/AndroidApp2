@@ -11,8 +11,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.code.chenjifff.experimentone.R;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -25,8 +23,8 @@ public class FoodDetail extends AppCompatActivity implements View.OnClickListene
     private boolean ifCollect;
     private Food food;
     private ListView lv;
-    private static final String DYNAMIC_ACTION = "con.code.chenjifff.experimentone.DynamicReceiver";
-    private static final String DYNAMIC_WIDGET_ACTION = "com.code.chenjifff.experimentone.DynamicWidgetFilter";
+    private static final String DYNAMIC_ACTION = "con.code.chenjifff.experimenttwo.DynamicReceiver";
+    private static final String DYNAMIC_WIDGET_ACTION = "com.code.chenjifff.experimenttwo.DynamicWidgetFilter";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

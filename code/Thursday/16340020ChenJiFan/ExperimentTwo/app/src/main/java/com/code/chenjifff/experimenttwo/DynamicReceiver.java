@@ -13,11 +13,9 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.widget.RemoteViews;
 
-import com.code.chenjifff.experimentone.R;
-
 public class DynamicReceiver extends BroadcastReceiver {
-    private final String DYNAMIC_ACTION = "con.code.chenjifff.experimentone.DynamicReceiver";
-    private static final String DYNAMIC_WIDGET_ACTION = "com.code.chenjifff.experimentone.DynamicWidgetFilter";
+    private final String DYNAMIC_ACTION = "con.code.chenjifff.experimenttwo.DynamicReceiver";
+    private static final String DYNAMIC_WIDGET_ACTION = "com.code.chenjifff.experimenttwo.DynamicWidgetFilter";
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.code.chenjifff.experimentone.R;
-
 /**
  * Implementation of App Widget functionality.
  */
 public class AppWidget extends AppWidgetProvider {
 
-    private static final String STATIC_WIDGET_ACTION = "com.code.chenjifff.experimentone.StaticWidgetFilter";
+    private static final String STATIC_WIDGET_ACTION = "com.code.chenjifff.experimenttwo.StaticWidgetFilter";
     private Bundle extras;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,

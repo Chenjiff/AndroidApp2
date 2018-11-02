@@ -16,8 +16,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.code.chenjifff.experimentone.R;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -33,8 +31,8 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
     private FoodCollectListViewAdapter collectAdapter;
     private ArrayList<Food> foodCollectData;
     //private int current;
-    private static final String STATIC_ACTION = "com.code.chenjifff.experimentone.StaticFilter";
-    private static final String STATIC_WIDGET_ACTION = "com.code.chenjifff.experimentone.StaticWidgetFilter";
+    private static final String STATIC_ACTION = "com.code.chenjifff.experimenttwo.StaticFilter";
+    private static final String STATIC_WIDGET_ACTION = "com.code.chenjifff.experimenttwo.StaticWidgetFilter";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

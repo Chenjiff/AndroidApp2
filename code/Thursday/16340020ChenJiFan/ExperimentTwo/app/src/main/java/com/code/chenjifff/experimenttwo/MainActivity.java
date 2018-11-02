@@ -11,8 +11,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.code.chenjifff.experimentone.R;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     String SearchType;
     @Override

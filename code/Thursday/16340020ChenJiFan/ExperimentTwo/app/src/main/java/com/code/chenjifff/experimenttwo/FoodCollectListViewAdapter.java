@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.code.chenjifff.experimentone.R;
-
 import java.util.ArrayList;
 
 public class FoodCollectListViewAdapter extends BaseAdapter {

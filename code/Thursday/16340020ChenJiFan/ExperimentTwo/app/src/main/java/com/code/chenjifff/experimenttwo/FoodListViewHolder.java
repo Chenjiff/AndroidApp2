@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.code.chenjifff.experimentone.R;
-
 public class FoodListViewHolder extends RecyclerView.ViewHolder {
     Button foodIcon;
     TextView foodName;

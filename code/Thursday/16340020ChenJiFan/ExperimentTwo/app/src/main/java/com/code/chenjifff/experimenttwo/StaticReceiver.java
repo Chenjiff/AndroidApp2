@@ -10,10 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 
-import com.code.chenjifff.experimentone.R;
-
 public class StaticReceiver extends BroadcastReceiver {
-    private static final String STATIC_ACTION = "com.code.chenjifff.experimentone.StaticFilter";
+    private static final String STATIC_ACTION = "com.code.chenjifff.experimenttwo.StaticFilter";
     //下面的方法为接收到广播后执行的动作
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
