@@ -3,6 +3,7 @@ package com.code.chenjifff.experimenttwo;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,8 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
     private ArrayList<Food> foodData;
     private FoodCollectListViewAdapter collectAdapter;
     private ArrayList<Food> foodCollectData;
+    private FoodDAO foodDAO;
+
     //private int current;
     private static final String STATIC_ACTION = "com.code.chenjifff.experimenttwo.StaticFilter";
     private static final String STATIC_WIDGET_ACTION = "com.code.chenjifff.experimenttwo.StaticWidgetFilter";
@@ -37,31 +40,14 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-        //添加控件到本类
-        rv = (RecyclerView) this.findViewById(R.id.food_list);
-        lv = (ListView) this.findViewById(R.id.food_collect);
-        floatButton = (FloatingActionButton) findViewById(R.id.collect_button);
 
-        //初始化食物列表和收藏列表
-        foodData = new ArrayList<Food>();
-        foodData.add(new Food("大豆", "粮", "粮食", "蛋白质", "#BB4C3B"));
-        foodData.add(new Food("十字花科蔬菜", "蔬", "蔬菜", "维生素C", "#C48D30"));
-        foodData.add(new Food("牛奶", "饮", "饮品", "钙", "#4469B0"));
-        foodData.add(new Food("海鱼", "肉", "肉食", "蛋白质", "#20A17B"));
-        foodData.add(new Food("菌菇类", "蔬", "蔬菜", "微量元素", "#BB4C3B"));
-        foodData.add(new Food("番茄", "蔬", "蔬菜", "番茄红素", "#4469B0"));
-        foodData.add(new Food("胡萝卜", "蔬", "蔬菜", "胡萝卜素", "#20A17B"));
-        foodData.add(new Food("荞麦", "粮", "粮食", "膳食纤维", "#BB4C3B"));
-        foodData.add(new Food("鸡蛋", "杂", "杂", "几乎所有营养物质", "#C48D30"));
-        foodCollectData = new ArrayList<Food>();
-        //处理RecyclerView
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        FoodListAdapter adapter = new FoodListAdapter(this, foodData);
-        adapter.setOnItemClickListener(this);
-        rv.setAdapter(adapter);
-        //处理收藏夹界面的ListView
-        collectAdapter = new FoodCollectListViewAdapter(this, foodCollectData);
-        lv.setAdapter(collectAdapter);
+        foodDAO = new FoodDAO(this);
+
+        bindViewsID();
+
+        createRecyclerView();
+
+        createListView();
 
         //添加各种监听器
         addListener();
@@ -84,6 +70,47 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
         bundleWidget.putSerializable("food", foodData.get(i));
         intentStaticWidgetBroadcast.putExtras(bundleWidget);
         sendBroadcast(intentStaticWidgetBroadcast);
+    }
+
+    //添加控件到本类
+    void bindViewsID() {
+        rv = (RecyclerView) this.findViewById(R.id.food_list);
+        lv = (ListView) this.findViewById(R.id.food_collect);
+        floatButton = (FloatingActionButton) findViewById(R.id.collect_button);
+    }
+
+    void createRecyclerView() {
+        //初始化食物列表和收藏列表
+        if((foodData = getDataFromDB()) == null) {
+            foodData = new ArrayList<Food>();
+        }
+
+        //处理RecyclerView
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        FoodListAdapter adapter = new FoodListAdapter(this, foodData);
+        adapter.setOnItemClickListener(this);
+        rv.setAdapter(adapter);
+    }
+
+    public ArrayList<Food> getDataFromDB() {
+        ArrayList<Food> data = new ArrayList<Food>();
+        Cursor cursor = foodDAO.selectAll();
+        if(cursor.getCount() == 0 || !cursor.moveToFirst()) {
+            return null;
+        }
+        while(cursor.moveToNext()) {
+            Food food = new Food(cursor.getString(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getInt(4));
+            data.add(food);
+        }
+        return data;
+    }
+
+    void createListView() {
+        foodCollectData = new ArrayList<Food>();
+        //处理收藏夹界面的ListView
+        collectAdapter = new FoodCollectListViewAdapter(this, foodCollectData);
+        lv.setAdapter(collectAdapter);
     }
 
     //添加监听器
@@ -123,7 +150,9 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         foodCollectData.remove(food);
+                        //此Adapter和RecyclerView的Adapter不一样,通过lv.getAdapter()并不能成功修改,lv的是ListAdapter类型的，没有notify...
                         collectAdapter.notifyDataSetChanged();
+                        lv.getAdapter();
                     }
                 });
                 dialog.show();
@@ -154,6 +183,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
         Toast.makeText(this, "删除" + food.getName(), Toast.LENGTH_SHORT).show();
         foodData.remove(food);
         rv.getAdapter().notifyItemRemoved(i);
+        foodDAO.delele(food);
     }
 
     //此Activity下控件的点击事件（不包括RecycleView和ListView的子项点击）
@@ -195,7 +225,6 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
         Boolean intoCollect = false;
         if(intent.getExtras() != null) {
             intoCollect = intent.getExtras().getBoolean("intoCollect", false);
-            Log.d("2", "onResume: 11");
         }
         if(intoCollect) {
             RelativeLayout collect_bar = (RelativeLayout) findViewById(R.id.collect_bar);

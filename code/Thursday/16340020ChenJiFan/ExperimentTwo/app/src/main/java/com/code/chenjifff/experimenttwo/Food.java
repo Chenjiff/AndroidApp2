@@ -14,32 +14,52 @@ public class Food implements Serializable {
     private String nutrient;
     private int backgroundColor;
 
-    public Food(String _name, String _typeSimple, String _type, String _nutrient, String _backgroundColor) {
-        name = _name;
-        typeSimple = _typeSimple;
-        type = _type;
-        nutrient = _nutrient;
-        backgroundColor = Color.parseColor(_backgroundColor);
+    public Food(String name, String typeSimple, String type, String nutrient, String backgroundColor) {
+        this.name = name;
+        this.typeSimple = typeSimple;
+        this.type = type;
+        this.nutrient = nutrient;
+        this.backgroundColor = Color.parseColor(backgroundColor);
+    }
+
+    public Food(String name, String typeSimple, String type, String nutrient, int backgroundColor) {
+        this.name = name;
+        this.typeSimple = typeSimple;
+        this.type = type;
+        this.nutrient = nutrient;
+        this.backgroundColor = backgroundColor;
     }
 
     public String getName () {
         return name;
     }
 
+    public void setName (String name) { this.name = name; }
+
     public String getTypeSimple() {
         return typeSimple;
     }
+
+    public void setTypeSimple(String typeSimple) { this.typeSimple = typeSimple; }
 
     public String getType () {
         return type;
     }
 
-    public String getNutrient () {
-        return nutrient;
+    public void setType(String type) { this.type = type; }
+
+    public String getNutrient () { return nutrient; }
+
+    public void setNutrient(String nutrient) { this.nutrient = nutrient; }
+
+    public int getBackgroundColor() { return backgroundColor; }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = Color.parseColor(backgroundColor);
     }
 
-    public int getBackgroundColor () {
-        return backgroundColor;
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
